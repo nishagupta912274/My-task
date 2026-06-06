@@ -1,1 +1,72 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+<div id="main">
+    <h2>Tasks To Do</h2>
+
+    <p id="count">Total Tasks: 0</p>
+
+    <div id="inputbox">
+        <input type="text" id="inputtask" placeholder="Type the task...">
+        <button onclick="add()">Add</button>
+    </div>
+
+    <ul id="tasklist"></ul>
+</div>
+
+<script>
+let inputtask = document.getElementById("inputtask");
+let tasklist = document.getElementById("tasklist");
+
+function updateCount(){
+    document.getElementById("count").innerText =
+    "Total Tasks: " + tasklist.children.length;
+}
+
+function add(){
+    if(inputtask.value.trim() === ""){
+        alert("Please enter a task!");
+        return;
+    }
+
+    let li = document.createElement("li");
+
+    let text = document.createElement("span");
+    text.innerText = inputtask.value;
+
+    text.onclick = function(){
+        text.classList.toggle("done");
+    };
+
+    let btn = document.createElement("button");
+    btn.innerText = "X";
+    btn.className = "delete";
+
+    btn.onclick = function(){
+        li.remove();
+        updateCount();
+    };
+
+    li.appendChild(text);
+    li.appendChild(btn);
+
+    tasklist.appendChild(li);
+
+    inputtask.value = "";
+    updateCount();
+}
+
+inputtask.addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+        add();
+    }
+});
+</script>
+
+</body>
+</html>
