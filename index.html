@@ -5,68 +5,36 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    
 
-<div id="main">
-    <h2>Tasks To Do</h2>
+    <div id="main">
+        <h2>Tasks to Do</h2>
 
-    <p id="count">Total Tasks: 0</p>
+        <div id="inputbox">
+            <input type="text" id="inputtask" placeholder="Type the task...">
+            <button onclick="add()">Add</button>
+        </div>
 
-    <div id="inputbox">
-        <input type="text" id="inputtask" placeholder="Type the task...">
-        <button onclick="add()">Add</button>
+        <ul id="tasklist"></ul>
+
     </div>
 
-    <ul id="tasklist"></ul>
-</div>
+    <script>
+        inputtask = document.getElementById('inputtask');
+        tasklist = document.getElementById('tasklist');
+        function add() {
+            if(inputtask.value != "") {
+                let li = document.createElement('li');
+                li.innerHTML = inputtask.value + "<button onclick=remove(this)>X</button> ";
+                tasklist.appendChild(li);
+                inputtask.value = "";
+            }
+        }
 
-<script>
-let inputtask = document.getElementById("inputtask");
-let tasklist = document.getElementById("tasklist");
-
-function updateCount(){
-    document.getElementById("count").innerText =
-    "Total Tasks: " + tasklist.children.length;
-}
-
-function add(){
-    if(inputtask.value.trim() === ""){
-        alert("Please enter a task!");
-        return;
-    }
-
-    let li = document.createElement("li");
-
-    let text = document.createElement("span");
-    text.innerText = inputtask.value;
-
-    text.onclick = function(){
-        text.classList.toggle("done");
-    };
-
-    let btn = document.createElement("button");
-    btn.innerText = "X";
-    btn.className = "delete";
-
-    btn.onclick = function(){
-        li.remove();
-        updateCount();
-    };
-
-    li.appendChild(text);
-    li.appendChild(btn);
-
-    tasklist.appendChild(li);
-
-    inputtask.value = "";
-    updateCount();
-}
-
-inputtask.addEventListener("keypress", function(event){
-    if(event.key === "Enter"){
-        add();
-    }
-});
-</script>
+        function remove (elem) {
+            elem.parentElement.remove();
+        }
+    </script>
 
 </body>
 </html>
